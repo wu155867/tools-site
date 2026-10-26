@@ -32,7 +32,7 @@
     el.innerHTML =
       '<div class="container">' +
         '<a class="logo" href="' + ROOT + 'index.html">' +
-          '<img src="' + ROOT + 'img/mp-icon.png?v=2" alt="logo">' +
+          '<img src="' + ROOT + 'img/logo.png" alt="logo">' +
           '<span>' + esc(cfg.siteName || "") + '</span>' +
           '<span class="logo-sub">' + esc(cfg.tagline || "") + '</span>' +
         '</a>' +
