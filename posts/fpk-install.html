@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-root="../">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>飞牛 fnOS 安装第三方 FPK 应用：少走弯路的完整步骤 - 工具铺</title>
+<meta name="description" content="从下载安装包到应用跑起来，以及装完打不开、报权限错误时怎么排查。">
+<link rel="icon" href="../img/logo.png">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-page="blog">
+
+<main class="container">
+  <nav class="crumbs"><a href="../blog.html">教程</a> / 飞牛 fnOS 安装第三方 FPK 应用</nav>
+
+  <article class="article">
+    <div class="a-date">2026-10-26 · 入门 · 约 3 分钟</div>
+    <h1>飞牛 fnOS 安装第三方 FPK 应用：少走弯路的完整步骤</h1>
+
+    <p>fnOS 自带的应用中心软件有限，很多好用的第三方应用以 <code>.fpk</code> 安装包形式发布。整个安装过程只要三步，但有几个容易踩的坑，这篇一起讲清楚。</p>
+
+    <h2>安装三步</h2>
+    <ol class="steps">
+      <li><b>下载 fpk 安装包</b><p>从软件详情页下载，得到类似 <code>xxx-1.0.4.fpk</code> 的文件。fpk 本质上是一个带签名的压缩包，不用解压。</p></li>
+      <li><b>应用中心 → 本地安装</b><p>fnOS 桌面打开「应用中心」，点右上角的「⋯」菜单，选「本地安装」，再选中刚下载的 fpk 文件。</p></li>
+      <li><b>等待安装完成</b><p>应用越大等待越久（300MB 左右的应用约 1~2 分钟）。装完桌面会出现图标，点击进入。</p></li>
+    </ol>
+
+    <h2>常见问题排查</h2>
+
+    <h3>「本地安装」按钮找不到</h3>
+    <p>部分 fnOS 版本把它藏在应用中心右上角的菜单里，而不是页面上直接展示。另外确保你的 fnOS 版本不要太旧。</p>
+
+    <h3>提示「安装包校验失败」</h3>
+    <p>多半是下载不完整。对比一下文件大小（详情页有标注），重新下载一次；用浏览器自带下载功能，别用某些「多线程下载器」。</p>
+
+    <h3>装好了但打不开 / 一直转圈</h3>
+    <p>先在应用中心里「停止」再「启动」一次。如果还不行，用 SSH 登录 NAS 看日志：</p>
+    <pre><code>sudo appcenter-cli list
+sudo appcenter-cli status 应用名</code></pre>
+    <blockquote>注意：appcenter-cli 必须 root 执行，普通用户直接跑会异常退出。</blockquote>
+
+    <h3>升级会丢配置吗</h3>
+    <p>正规发布的 fpk 会把用户配置放在 <code>/vol1/@appdata/应用名/</code> 之类的数据目录，覆盖安装不会动它。卸载前不确定的话，先把这个目录备份一份。</p>
+
+    <div class="tip">装完打不开十有八九是端口被占了 —— 改一下应用设置的端口再启动，基本都能解决。</div>
+
+    <h2>写在最后</h2>
+    <p>本站发布的 <a href="../apps/moviepilot-fnos-lite.html" style="color:var(--accent)">MP 入库助手</a> 就是标准 fpk 包，按上面三步即可安装。有其他问题欢迎去 GitHub 提 issue。</p>
+  </article>
+</main>
+
+<script src="../assets/site.js"></script>
+</body>
+</html>

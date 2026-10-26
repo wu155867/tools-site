@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-root="../">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>让影片自动用国内译名命名：TMDB 没中文名怎么办 - 工具铺</title>
+<meta name="description" content="TMDB 只有英文名时播放器刮削一团糟。用豆瓣中文名兜底，硬链接时直接重命名。">
+<link rel="icon" href="../img/logo.png">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-page="blog">
+
+<main class="container">
+  <nav class="crumbs"><a href="../blog.html">教程</a> / 让影片自动用国内译名命名</nav>
+
+  <article class="article">
+    <div class="a-date">2026-10-26 · 实战 · 约 4 分钟</div>
+    <h1>让影片自动用国内译名命名：TMDB 没中文名怎么办</h1>
+
+    <p>用 MoviePilot 整理影片的同学应该遇到过这种情况：一部电影在 TMDB 上只有英文名，整理完文件夹和文件名全是英文。比如 <i>Merry Christmas Aubrey Flint</i>，国内平台其实叫<b>《圣诞好戏》</b> —— 飞牛播放器对英文标题的刮削支持较弱，最后海报都对不上。</p>
+
+    <p>v1.0.4 起加入了「豆瓣中文名兜底」：识别到 TMDB 标题不含中文时，自动去豆瓣查这部片的官方中文名，用「<b>中文名 + 英文名</b>」的格式重命名。</p>
+
+    <h2>效果对比</h2>
+    <table>
+      <tr><th></th><th>整理前</th><th>整理后</th></tr>
+      <tr><td>目录</td><td>Merry Christmas Aubrey Flint (2026)</td><td>圣诞好戏 Merry Christmas Aubrey Flint (2026)</td></tr>
+      <tr><td>文件</td><td>Merry.Christmas.Aubrey.Flint.2026.1080p.mp4</td><td>圣诞好戏 Merry Christmas Aubrey Flint (2026) - 1080p.mp4</td></tr>
+    </table>
+
+    <p>保留英文原名是刻意的：中文名给飞牛播放器和国内用户看，英文名保底，万一豆瓣译名有出入，文件仍然可被正确搜索。</p>
+
+    <h2>它是怎么工作的</h2>
+    <ol class="steps">
+      <li><b>识别阶段</b><p>影片经过 TMDB 识别后，检查标题是否包含中文。</p></li>
+      <li><b>兜底查询</b><p>若标题为纯英文，携带 TMDB 的 IMDb 编号查豆瓣；查不到再做标题关键词搜索，按年份（±1）匹配过滤。</p></li>
+      <li><b>重命名</b><p>拿到豆瓣中文名后合并进标题，后续硬链接的目录、文件名、NFO 全部使用新名称。查询失败不影响整理，只是维持原名。</p></li>
+    </ol>
+
+    <div class="warn">每次兜底查询都会访问豆瓣，请勿短时间内批量整理上千部影片，以免触发豆瓣风控导致 IP 临时不可用。</div>
+
+    <h2>会不会误伤正常影片</h2>
+    <p>不会。只有「TMDB 标题完全不含中文」才会触发兜底；《复仇者联盟4》《星际穿越》这类本来就有中文名的影片，流程和原来完全一致。查询失败也只回退原名，不会中断整理。</p>
+
+    <h2>怎么升级</h2>
+    <p>在飞牛应用中心对 <a href="../apps/moviepilot-fnos-lite.html" style="color:var(--accent)">MP 入库助手</a> 覆盖安装 v1.0.4 即可，配置自动继承。此特性默认开启，无需额外设置。</p>
+  </article>
+</main>
+
+<script src="../assets/site.js"></script>
+</body>
+</html>

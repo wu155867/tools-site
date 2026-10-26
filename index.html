@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-root="./">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>工具铺 - 自研小软件 · 免费分享</title>
+<meta name="description" content="独立开发的小工具：飞牛 fnOS 应用、NAS 效率工具，免费下载，附安装教程。">
+<link rel="icon" href="img/logo.png">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="apps">
+
+<main class="container">
+  <section class="hero">
+    <h1>把折腾 NAS 的经验，<br>做成<em>人人能用</em>的小软件</h1>
+    <p class="lead">自己在用的工具，踩完坑、打磨好，免费分享。每一款都附安装教程，装不上随时反馈。</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#apps">看看软件</a>
+      <a class="btn btn-ghost" href="blog.html">看看教程</a>
+    </div>
+  </section>
+
+  <section class="section" id="apps">
+    <div class="section-head">
+      <h2>软件</h2>
+      <a class="more" href="about.html">关于作者 →</a>
+    </div>
+    <div class="filter-bar" id="filterBar">
+      <button class="on" data-filter="all">全部</button>
+      <button data-filter="fnOS">飞牛 fnOS</button>
+      <button data-filter="Windows">Windows</button>
+      <button data-filter="Android">Android</button>
+    </div>
+    <div id="appList"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2>最新教程</h2>
+      <a class="more" href="blog.html">全部教程 →</a>
+    </div>
+    <div id="postList" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:6px 22px;box-shadow:var(--shadow-sm)"></div>
+  </section>
+</main>
+
+<script src="assets/site.js"></script>
+</body>
+</html>

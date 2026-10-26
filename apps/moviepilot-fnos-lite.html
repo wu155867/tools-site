@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-root="../">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MP 入库助手 v1.0.4 - 工具铺</title>
+<meta name="description" content="MoviePilot 精简版，打包成飞牛 fnOS 原生 FPK 应用：自动整理影视库、硬链接零碎片、中文译名重命名。">
+<link rel="icon" href="../img/logo.png">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-page="apps">
+
+<main class="container">
+  <nav class="crumbs"><a href="../index.html">软件</a> / MP 入库助手</nav>
+
+  <section class="app-hero">
+    <img src="../img/mp-icon.png" alt="MP 入库助手图标">
+    <div style="flex:1;min-width:0">
+      <h1>MP 入库助手</h1>
+      <div class="sub">MoviePilot 精简版 · 飞牛 fnOS 原生应用 · v1.0.4</div>
+      <div class="dl-row">
+        <a class="btn btn-primary" href="https://pan.xunlei.com/s/VP4sH9h2pZ9gbIBw4RLdO5A1A1?pwd=i3jw" target="_blank" rel="noopener">
+          <svg class="dl-ico" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1v8.5m0 0L4.8 6.3M8 9.5l3.2-3.2M2.5 11.5v1.8c0 .7.5 1.2 1.2 1.2h8.6c.7 0 1.2-.5 1.2-1.2v-1.8" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          迅雷网盘下载
+        </a>
+        <a class="btn btn-ghost" href="https://github.com/wu155867/moviepilot-fnos-lite/releases" target="_blank" rel="noopener">
+          <svg class="dl-ico" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+          GitHub 下载
+        </a>
+      </div>
+      <div class="dl-note" style="margin-top:10px">安装包约 318 MB · 提取码 <b>i3jw</b> · 适用于飞牛 fnOS · 安装教程见下方</div>
+    </div>
+  </section>
+
+  <div class="panel">
+    <h2>这是什么</h2>
+    <p style="color:#2A2F36;font-size:14.5px">把开源的 MoviePilot 裁剪打包成飞牛 fnOS 应用中心可直接安装的 FPK。不用 SSH 敲命令、不用装 Docker、不用研究环境变量 —— 装上就能用，影视库自动整理进你的媒体目录。</p>
+    <p style="color:#2A2F36;font-size:14.5px;margin-top:8px">同时针对国内环境做了精简与增强：去掉国内用不上的模块、修复了飞牛下的路径与权限问题、并加入豆瓣中文名兜底等实用特性。</p>
+  </div>
+
+  <div class="panel">
+    <h2>核心特性</h2>
+    <ul class="feat">
+      <li><b>原生 FPK 安装</b> —— 应用中心一键安装/升级，数据保留在独立目录，卸载重装不丢配置</li>
+      <li><b>自动整理</b> —— 监控下载目录，自动识别、刮削、硬链接入库，原文件不动，不产生重复占用</li>
+      <li><b>默认硬链接</b> —— 同盘整理零拷贝，做种与入库两不误</li>
+      <li><b>中文译名命名</b> —— TMDB 只有英文名时自动用豆瓣中文名兜底，如「圣诞好戏 Merry Christmas Aubrey Flint (2026)」，飞牛播放器刮削友好</li>
+      <li><b>开箱即用</b> —— 内置站点辅助与常见配置模板，首次启动有引导</li>
+    </ul>
+  </div>
+
+  <div class="panel">
+    <h2>安装步骤</h2>
+    <ol class="steps">
+      <li><b>下载安装包</b><p>点击上方下载按钮，得到 <code>moviepilot-fnos-lite-1.0.4.fpk</code>。</p></li>
+      <li><b>打开飞牛应用中心</b><p>fnOS 桌面 →「应用中心」→ 右上角菜单选择「本地安装」，选中下载的 fpk 文件。</p></li>
+      <li><b>等待安装完成</b><p>首次安装约 1~2 分钟。完成后桌面出现「MP 入库助手」图标，点击进入即可开始配置。</p></li>
+    </ol>
+    <div class="tip" style="margin-top:14px">更详细的图文步骤与常见报错排查，见教程 <a href="../posts/fpk-install.html" style="color:var(--accent)">《飞牛 fnOS 安装第三方 FPK 应用》</a>。</div>
+  </div>
+
+  <div class="panel">
+    <h2>更新日志</h2>
+    <ul class="timeline">
+      <li>
+        <div class="v"><span>v1.0.4</span><span class="date">2026-10-26</span><span class="new">当前</span></div>
+        <ul>
+          <li>新增：TMDB 无中文译名时，自动用豆瓣中文名兜底重命名（按标题与按编号识别两条链路全覆盖）</li>
+          <li>默认整理方式改为硬链接</li>
+        </ul>
+      </li>
+      <li>
+        <div class="v"><span>v1.0.3</span><span class="date">2026-10</span></div>
+        <ul>
+          <li>整理流程稳定性修复，目录生成规则优化</li>
+        </ul>
+      </li>
+      <li>
+        <div class="v"><span>v1.0.0 ~ 1.0.2</span><span class="date">2026-10</span></div>
+        <ul>
+          <li>首个公开版本：MoviePilot 精简打包为 fnOS 原生应用</li>
+          <li>修复飞牛下的路径、权限与进程管理问题</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="panel">
+    <h2>常见问题</h2>
+    <ul class="feat">
+      <li><b>升级会丢配置吗？</b> 不会。配置保存在 fnOS 应用数据目录，覆盖安装自动继承。</li>
+      <li><b>和 Docker 版 MoviePilot 有什么区别？</b> 功能上是精简子集，胜在零配置门槛、与 fnOS 深度集成（权限、目录、开机自启）。</li>
+      <li><b>为什么文件名变成了「中文名 + 英文名」？</b> 这是 v1.0.4 新特性，兼顾国内播放器刮削与源站识别，可在设置中关闭。</li>
+    </ul>
+  </div>
+</main>
+
+<script src="../assets/site.js"></script>
+</body>
+</html>

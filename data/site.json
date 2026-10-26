@@ -1,0 +1,11 @@
+{
+  "siteName": "工具铺",
+  "tagline": "自研小软件 · 免费分享",
+  "github": "https://github.com/wu155867",
+  "email": "",
+  "nav": [
+    { "key": "apps", "text": "软件", "href": "index.html" },
+    { "key": "blog", "text": "教程", "href": "blog.html" },
+    { "key": "about", "text": "关于", "href": "about.html" }
+  ]
+}
