@@ -3,30 +3,91 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>飞牛 fnOS 安装第三方 FPK 应用：少走弯路的完整步骤 - 工具铺</title>
-<meta name="description" content="从下载安装包到应用跑起来，以及装完打不开、报权限错误时怎么排查。">
+<title>从 Docker 到飞牛原生应用：我为什么做了 MP 入库助手 - 工具铺</title>
+<meta name="description" content="从 Docker 版 MoviePilot 到飞牛原生 fpk 应用：为什么重做、资源占用对比、裁剪打包踩过的坑，以及最后的安装教程。">
 <link rel="icon" href="../img/logo.png">
 <link rel="stylesheet" href="../assets/style.css?v=7">
 </head>
 <body data-page="blog">
 
 <main class="container">
-  <nav class="crumbs"><a href="../blog.html">教程</a> / 飞牛 fnOS 安装第三方 FPK 应用</nav>
+  <nav class="crumbs"><a href="../blog.html">教程</a> / 从 Docker 到飞牛原生应用</nav>
 
   <article class="article">
-    <div class="a-date">2026-10-26 · 入门 · 约 3 分钟</div>
-    <h1>飞牛 fnOS 安装第三方 FPK 应用：少走弯路的完整步骤</h1>
+    <div class="a-date">2026-10-27 · 入门 · 约 6 分钟</div>
+    <h1>从 Docker 到飞牛原生应用：我为什么做了 MP 入库助手</h1>
 
-    <p>fnOS 自带的应用中心软件有限，很多好用的第三方应用以 <code>.fpk</code> 安装包形式发布。整个安装过程只要三步，但有几个容易踩的坑，这篇一起讲清楚。</p>
+    <p>这篇是本站的入门教程，讲三件事：<b>我为什么要做 MP 入库助手</b>、它和 Docker 方案比<b>到底好在哪</b>、以及<b>怎么装</b>。如果你只想快速装上用，直接跳到最后的「安装三步」。</p>
 
-    <h2>安装三步</h2>
+    <h2>一、起因：整理影视库，痛点太多了</h2>
+    <p>玩 NAS 的都知道，下载器只负责把文件拉下来，真正麻烦的是<b>整理</b>：文件名千奇百怪、集中存放没有分类、刮削信息对不上号，硬链接重命名更是想都不敢想。这套活最成熟的方案是 MoviePilot —— 识别、刮削、入库、下载管理一条龙。</p>
+    <p>但问题出在<b>装它本身</b>。官方只提供 Docker 镜像，而我用的是飞牛 fnOS。</p>
+
+    <h2>二、以前的方式：Docker 安装 MoviePilot</h2>
+    <p>在飞牛上用 Docker 跑 MoviePilot，标准流程大概是这样：</p>
     <ol class="steps">
-      <li><b>下载 fpk 安装包</b><p>从软件详情页下载，得到类似 <code>xxx-1.0.4.fpk</code> 的文件。fpk 本质上是一个带签名的压缩包，不用解压。</p></li>
+      <li><b>开启 SSH，敲命令</b><p>飞牛的 Docker 管理界面搞不定复杂的编排，基本都得 SSH 上去写 <code>docker-compose.yml</code>。</p></li>
+      <li><b>拉镜像</b><p>镜像体积超过 1GB，国内拉取慢甚至失败，得先配镜像加速。</p></li>
+      <li><b>配一大堆参数</b><p>十几个环境变量（认证密钥、UMASK、PGID/PUID）、七八个目录映射、网络模式选 host 还是 bridge，每一项配错都起不来。</p></li>
+      <li><b>出问题看容器日志</b><p>报错了要去翻英文日志，对新手非常不友好。</p></li>
+    </ol>
+    <p>这些我第一次都熬过来了，但有两个问题始终不舒服：</p>
+    <p><b>一是门槛。</b>我身边想用 MoviePilot 的朋友，一半倒在了 Docker 这一步 —— 不是功能不行，是「装不上」劝退了。</p>
+    <p><b>二是资源。</b>为了一个媒体整理工具，常驻一整个 Docker 引擎 + 完整版 MoviePilot，很多模块我根本用不上（音乐、订阅推送、站点索引……），它们都在吃内存。</p>
+
+    <h2>三、Docker vs 原生应用，差在哪</h2>
+    <p>所以我决定动手：把 MoviePilot <b>裁剪</b>成飞牛原生应用（fpk 安装包），去掉用不上的模块、内置运行时，做成「安装即用」。两种方式的实际差别：</p>
+
+    <table>
+      <thead><tr><th>对比项</th><th>Docker 方案</th><th>MP 入库助手（原生 fpk）</th></tr></thead>
+      <tbody>
+        <tr><td>安装门槛</td><td>SSH + 命令行 + compose 编排</td><td>应用中心点「手动安装」，全程图形界面</td></tr>
+        <tr><td>前置依赖</td><td>需要 Docker 环境常驻</td><td>无，Python 运行时已内置在包里</td></tr>
+        <tr><td>初始配置</td><td>十几个环境变量 + 目录映射</td><td>安装向导点几下，进页面即配置</td></tr>
+        <tr><td>功能范围</td><td>完整版，含大量用不到的模块</td><td>裁剪后专注「整理入库」核心流程</td></tr>
+        <tr><td>资源占用</td><td>Docker 引擎 + 完整版，内存占用更高</td><td>无引擎开销，裁剪后更轻【实测数据见下】</td></tr>
+        <tr><td>升级 / 卸载</td><td>拉新镜像、重建容器</td><td>应用中心覆盖安装，配置保留</td></tr>
+      </tbody>
+    </table>
+
+    <h3>资源占用实测</h3>
+    <p>同一台飞牛（x86_64）上，两种方式稳定运行后的占用对比：</p>
+    <table>
+      <thead><tr><th>指标</th><th>Docker 版 MoviePilot</th><th>MP 入库助手</th></tr></thead>
+      <tbody>
+        <tr><td>内存占用（空闲）</td><td>【待填：Docker 容器内存占用】</td><td>【待填：原生应用内存占用】</td></tr>
+        <tr><td>磁盘占用</td><td>镜像超过 1GB + Docker 引擎</td><td>安装包约 318MB</td></tr>
+        <tr><td>额外开销</td><td>Docker 引擎常驻</td><td>无</td></tr>
+      </tbody>
+    </table>
+    <blockquote>内存数字我随后从飞牛的任务管理器截图补上 —— 数据要真实，不编数字。</blockquote>
+
+    <h2>四、裁剪和打包，远没有想的简单</h2>
+    <p>「把 Docker 应用改造成 fpk」听起来只是换个壳，实际是一路踩坑：</p>
+    <ol class="steps">
+      <li><b>模块裁剪牵一发动全身</b><p>MoviePilot 的模块相互耦合，删掉音乐、推送、站点索引等 24 个模块后，各种引用报错；其中站点助手的扩展是闭源的，得自己写空实现兜底，服务才能起得来。</p></li>
+      <li><b>前端也要动刀</b><p>后端裁了，界面上的入口也得删：推荐、订阅、日历、站点管理整组菜单移除，重新构建前端，否则用户点进去全是空白页。</p></li>
+      <li><b>fpk 不是压缩包那么简单</b><p>要按飞牛的应用规范写 manifest、安装向导、start/stop 生命周期脚本，还要把 Python 运行时整个内置进包里 —— 不能要求用户先装环境。应用数据必须落在规范目录（如 <code>/vol1/@appdata/</code>），保证覆盖升级不丢配置。</p></li>
+      <li><b>调试比开发还磨人</b><p>应用管理命令必须 root 执行；改了代码 kill 进程不会生效，必须走正规的停止/启动流程；SFTP 通道偶尔失联，只能换通道传文件。这些坑都写进了下面的排查清单。</p></li>
+      <li><b>顺手补了两个国内用户最痛的功能</b><p>① 整理时默认用<b>硬链接</b>，不占双份磁盘；② TMDB 上没有中文译名的影片（不少新片和冷门片都这样），自动用<b>豆瓣中文名兜底</b>重命名，飞牛播放器刮削中文就正常了。</p></li>
+    </ol>
+
+    <h2>五、现在的效果</h2>
+    <ul>
+      <li>一次安装即用：不敲一条命令，应用中心点几下就跑起来</li>
+      <li>界面只留整理入库的核心流程，第一次配置跟着向导走完即可</li>
+      <li>硬链接整理 + 豆瓣中文名兜底，中文媒体库体验完整</li>
+      <li>升级走应用中心覆盖安装，配置不丢</li>
+    </ul>
+
+    <h2>六、安装三步</h2>
+    <ol class="steps">
+      <li><b>下载 fpk 安装包</b><p>从<a href="../apps/moviepilot-fnos-lite.html" style="color:var(--accent)">软件详情页</a>下载，得到类似 <code>moviepilot-fnos-lite-1.0.4.fpk</code> 的文件。fpk 本质上是一个带签名的压缩包，不用解压。</p></li>
       <li><b>应用中心 → 手动安装</b><p>fnOS 桌面打开「应用中心」，点左下角的「手动安装」，在弹出的安装选择页面中选择安装位置以及文件来源（实际文件存放位置），选中刚下载的 fpk 文件，然后按照提示安装即可。</p></li>
       <li><b>等待安装完成</b><p>应用越大等待越久（300MB 左右的应用约 1~2 分钟）。装完桌面会出现图标，点击进入。</p></li>
     </ol>
 
-    <h2>常见问题排查</h2>
+    <h2>七、常见问题排查</h2>
 
     <h3>「手动安装」按钮找不到</h3>
     <p>「手动安装」位于应用中心页面的左下角。如果你的 fnOS 版本较旧，界面布局可能不同，建议先把 fnOS 升级到较新版本再安装。</p>
@@ -41,12 +102,12 @@ sudo appcenter-cli status 应用名</code></pre>
     <blockquote>注意：appcenter-cli 必须 root 执行，普通用户直接跑会异常退出。</blockquote>
 
     <h3>升级会丢配置吗</h3>
-    <p>正规发布的 fpk 会把用户配置放在 <code>/vol1/@appdata/应用名/</code> 之类的数据目录，覆盖安装不会动它。卸载前不确定的话，先把这个目录备份一份。</p>
+    <p>不会。用户配置存放在 <code>/vol1/@appdata/应用名/</code> 数据目录，覆盖安装不会动它。卸载前不放心的话，先把这个目录备份一份。</p>
 
     <div class="tip">装完打不开十有八九是端口被占了 —— 改一下应用设置的端口再启动，基本都能解决。</div>
 
     <h2>写在最后</h2>
-    <p>本站发布的 <a href="../apps/moviepilot-fnos-lite.html" style="color:var(--accent)">MP 入库助手</a> 就是标准 fpk 包，按上面三步即可安装。有其他问题欢迎去 GitHub 提 issue。</p>
+    <p>从 Docker 到原生，折腾这一圈的结论很简单：<b>好工具值得被更多人用上，而「装得上」比「功能全」更重要</b>。如果你也想在飞牛上省心整理影视库，去<a href="../apps/moviepilot-fnos-lite.html" style="color:var(--accent)">详情页</a>下载就行。有其他问题欢迎去 GitHub 提 issue。</p>
   </article>
 </main>
 
