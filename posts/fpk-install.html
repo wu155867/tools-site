@@ -80,11 +80,12 @@
       <li>升级走应用中心覆盖安装，配置不丢</li>
     </ul>
 
-    <h2>六、安装三步</h2>
+    <h2>六、安装流程</h2>
     <ol class="steps">
-      <li><b>下载 fpk 安装包</b><p>从<a href="../apps/moviepilot-fnos-lite.html" style="color:var(--accent)">软件详情页</a>下载，得到类似 <code>moviepilot-fnos-lite-1.0.4.fpk</code> 的文件。fpk 本质上是一个带签名的压缩包，不用解压。</p></li>
+      <li><b>下载 fpk 安装包</b><p>从<a href="../apps/moviepilot-fnos-lite.html" style="color:var(--accent)">软件详情页</a>下载，得到类似 <code>moviepilot-fnos-lite-1.0.6.fpk</code> 的文件。fpk 本质上是一个带签名的压缩包，不用解压。</p></li>
       <li><b>应用中心 → 手动安装</b><p>fnOS 桌面打开「应用中心」，点左下角的「手动安装」，在弹出的安装选择页面中选择安装位置以及文件来源（实际文件存放位置），选中刚下载的 fpk 文件，然后按照提示安装即可。</p></li>
-      <li><b>等待安装完成</b><p>应用越大等待越久（300MB 左右的应用约 1~2 分钟）。装完桌面会出现图标，点击进入。</p></li>
+      <li><b>选一个服务端口</b><p>安装向导会问你<b>服务端口</b>，默认 3011，直接下一步就行。如果 3011 已经被别的程序占着（比如你以前装过 Docker 版 MoviePilot），这里改成 3012、3013 之类没被占用数字，确定后继续安装。装好以后想换端口，进「应用中心 → MP入库助手 → 设置」改一次即可，桌面图标会自动跟着变。</p></li>
+      <li><b>等待安装完成</b><p>应用越大等待越久（300MB 左右的应用约 1~2 分钟）。装完桌面会出现图标，点击进入。首次启动要初始化数据库和缓存，等十几秒再点。</p></li>
     </ol>
 
     <h2>七、常见问题排查</h2>
@@ -105,12 +106,14 @@ sudo appcenter-cli status 应用名</code></pre>
     <p>不会。用户配置存放在 <code>/vol1/@appdata/应用名/</code> 数据目录，覆盖安装不会动它。卸载前不放心的话，先把这个目录备份一份。</p>
 
     <h3>端口被占怎么办</h3>
-    <p>先说结论：<b>飞牛应用设置里的「访问端口」是锁死的，界面上改不了</b>。应用的端口在安装时就由安装包声明并写入了系统（fnOS 把它存进 PostgreSQL 的 appcenter 库，启动应用时再注入给进程），所以正确姿势是「装之前就别冲突」——fnOS 安装应用时本身会校验端口，真装上了还打不开，优先查这两样：</p>
+    <p>从 1.0.6 开始不用折腾命令行了——<b>装的时候能选端口，装完也能在应用设置里改</b>：</p>
     <ul>
-      <li><b>应用是不是真的起来了</b>：SSH 执行 <code>sudo appcenter-cli status 应用名</code>，再 <code>curl -I http://127.0.0.1:端口</code> 本机探活，把「打不开」和「没启动」区分开。</li>
-      <li><b>端口是不是真被占了</b>：<code>sudo netstat -tlnp | grep 端口号</code>，看是谁在监听。多数情况其实是应用本身没起来（看 <code>/var/log/apps/应用名.log</code>），而不是端口问题。</li>
+      <li><b>还没装</b>：安装向导里的「服务端口」直接填一个空闲端口，比如 3012。</li>
+      <li><b>已经装好、打不开</b>：进「应用中心 → MP入库助手 → 设置」，在「新端口（留空不改）」里填 3012，保存。应用会自动重启，桌面图标也会指向新端口。</li>
     </ul>
-    <p>如果确实需要换端口，只能走 SSH，要同时改三处再重启应用：<code>/var/apps/应用名/manifest</code> 的 <code>service_port</code>、<code>/vol1/@appcenter/应用名/ui/config</code> 的 <code>port</code>，以及 appcenter 库 <code>app_service</code> 表的 <code>url</code>。这套操作对普通用户偏硬核，动手前建议先备份原文件。</p>
+    <p>不知道哪个端口空着？3011 被占就试 3012，还被占就 3013，逐个往上试；也可以用 SSH 跑 <code>sudo ss -ltnp | grep 3011</code> 看是谁占着。</p>
+    <blockquote>1.0.5 及更早的版本端口是写死的，界面上改不了，只能重装并让程序让出 3011。1.0.6 起这个问题已经解决，建议直接升级到最新版。</blockquote>
+    <p>换了端口还是打不开，先分清「没启动」和「打不开」：<code>sudo appcenter-cli status 应用名</code> 看状态；再看系统日志 <code>/var/log/apps/应用名.log</code> 和应用日志 <code>/vol1/@appdata/应用名/log/app.log</code>。首次启动初始化要十几秒，别急着判定失败。</p>
 
     <h2>写在最后</h2>
     <p>从 Docker 到原生，折腾这一圈的结论很简单：<b>好工具值得被更多人用上，而「装得上」比「功能全」更重要</b>。如果你也想在飞牛上省心整理影视库，去<a href="../apps/moviepilot-fnos-lite.html" style="color:var(--accent)">详情页</a>下载就行。有其他问题欢迎去 GitHub 提 issue。</p>
