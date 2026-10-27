@@ -45,21 +45,22 @@
         <tr><td>前置依赖</td><td>需要 Docker 环境常驻</td><td>无，Python 运行时已内置在包里</td></tr>
         <tr><td>初始配置</td><td>十几个环境变量 + 目录映射</td><td>安装向导点几下，进页面即配置</td></tr>
         <tr><td>功能范围</td><td>完整版，含大量用不到的模块</td><td>裁剪后专注「整理入库」核心流程</td></tr>
-        <tr><td>资源占用</td><td>Docker 引擎 + 完整版，内存占用更高</td><td>无引擎开销，裁剪后更轻【实测数据见下】</td></tr>
+        <tr><td>资源占用</td><td>Docker 引擎 + 完整版，内存占用更高</td><td>无引擎开销，裁剪后更轻（实测见下）</td></tr>
         <tr><td>升级 / 卸载</td><td>拉新镜像、重建容器</td><td>应用中心覆盖安装，配置保留</td></tr>
       </tbody>
     </table>
 
     <h3>资源占用实测</h3>
-    <p>同一台飞牛（x86_64）上，两种方式稳定运行后的占用对比：</p>
+    <p>同一台飞牛（x86_64、12GB 内存）上的实际数据：</p>
     <table>
       <thead><tr><th>指标</th><th>Docker 版 MoviePilot</th><th>MP 入库助手</th></tr></thead>
       <tbody>
-        <tr><td>内存占用（空闲）</td><td>【待填：Docker 容器内存占用】</td><td>【待填：原生应用内存占用】</td></tr>
-        <tr><td>磁盘占用</td><td>镜像超过 1GB + Docker 引擎</td><td>安装包约 318MB</td></tr>
-        <tr><td>额外开销</td><td>Docker 引擎常驻</td><td>无</td></tr>
+        <tr><td>内存占用（空闲稳定后）</td><td>数百 MB 量级：容器本身 + 常驻的 Docker 引擎双层开销</td><td><b>约 330MB</b>（主进程 313MB + 辅助进程 15MB，SSH 实测）</td></tr>
+        <tr><td>磁盘占用</td><td>镜像体积较大 + Docker 引擎本体</td><td>安装包约 318MB，装完即全部</td></tr>
+        <tr><td>不用时的开销</td><td>引擎常驻，停了应用还有一层</td><td>应用停止即零占用</td></tr>
       </tbody>
     </table>
+    <blockquote>说明：原生应用的数字是 SSH 上 <code>ps</code> 实测的；Docker 版当时用完已卸载，未能复测，只留定性描述。数字均为空闲稳定状态，整理媒体时会临时更高，属正常现象。</blockquote>
 
     <h2>四、裁剪和打包，远没有想的简单</h2>
     <p>「把 Docker 应用改造成 fpk」听起来只是换个壳，实际是一路踩坑：</p>
