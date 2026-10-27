@@ -11,7 +11,7 @@
       "icon": "img/mp-icon.png?v=2",
       "href": "apps/moviepilot-fnos-lite.html",
       "downloads": [
-        { "name": "迅雷网盘", "note": "推荐 · 会员加速", "url": "https://pan.xunlei.com/s/VP4sH9h2pZ9gbIBw4RLdO5A1A1?pwd=i3jw", "primary": true, "badge": "推荐" },
+        { "name": "迅雷网盘", "note": "推荐 · 会员加速 · 文件夹常更新", "url": "https://pan.xunlei.com/s/VP4x0GjNgpPn3R8iQlMVVesgA1?pwd=bkfi", "primary": true, "badge": "推荐" },
         { "name": "GitHub", "note": "备用线路 · 需自备网络", "url": "https://github.com/wu155867/moviepilot-fnos-lite/releases" }
       ]
     }
