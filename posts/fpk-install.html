@@ -51,16 +51,16 @@
     </table>
 
     <h3>资源占用实测</h3>
-    <p>同一台飞牛（x86_64、12GB 内存）上的实际数据：</p>
+    <p>同一台飞牛（x86_64、12GB 内存）上的实际数据，两个版本都是装好、启动、等稳定后现场测的：</p>
     <table>
       <thead><tr><th>指标</th><th>Docker 版 MoviePilot</th><th>MP 入库助手</th></tr></thead>
       <tbody>
-        <tr><td>内存占用（空闲稳定后）</td><td>数百 MB 量级：容器本身 + 常驻的 Docker 引擎双层开销</td><td><b>约 330MB</b>（主进程 313MB + 辅助进程 15MB，SSH 实测）</td></tr>
-        <tr><td>磁盘占用</td><td>镜像体积较大 + Docker 引擎本体</td><td>安装包约 318MB，装完即全部</td></tr>
-        <tr><td>不用时的开销</td><td>引擎常驻，停了应用还有一层</td><td>应用停止即零占用</td></tr>
+        <tr><td>内存占用（空闲稳定后）</td><td><b>约 395MB</b>（MoviePilot 主进程 352MB + supervisord/nginx 约 45MB，<code>docker stats</code> 实测；另有 Docker 引擎自身开销）</td><td><b>约 330MB</b>（主进程 313MB + 辅助进程 15MB，SSH 实测，无引擎开销）</td></tr>
+        <tr><td>磁盘占用</td><td>镜像 2.06GB + Docker 引擎本体</td><td>安装包约 318MB，装完即全部</td></tr>
+        <tr><td>不用时的开销</td><td>引擎常驻，停了容器还有一层</td><td>应用停止即零占用</td></tr>
       </tbody>
     </table>
-    <blockquote>说明：原生应用的数字是 SSH 上 <code>ps</code> 实测的；Docker 版当时用完已卸载，未能复测，只留定性描述。数字均为空闲稳定状态，整理媒体时会临时更高，属正常现象。</blockquote>
+    <blockquote>说明：两边数字都是空闲稳定状态，整理媒体时会临时更高，属正常现象。单看内存两者其实在同一个量级 —— Docker 版真正的重量在<b>镜像体积（2GB 对 318MB）</b>和<b>常驻的引擎层</b>，以及「装起来」的门槛。</blockquote>
 
     <h2>四、裁剪和打包，远没有想的简单</h2>
     <p>「把 Docker 应用改造成 fpk」听起来只是换个壳，实际是一路踩坑：</p>
@@ -104,7 +104,13 @@ sudo appcenter-cli status 应用名</code></pre>
     <h3>升级会丢配置吗</h3>
     <p>不会。用户配置存放在 <code>/vol1/@appdata/应用名/</code> 数据目录，覆盖安装不会动它。卸载前不放心的话，先把这个目录备份一份。</p>
 
-    <div class="tip">装完打不开十有八九是端口被占了 —— 改一下应用设置的端口再启动，基本都能解决。</div>
+    <h3>端口被占怎么办</h3>
+    <p>先说结论：<b>飞牛应用设置里的「访问端口」是锁死的，界面上改不了</b>。应用的端口在安装时就由安装包声明并写入了系统（fnOS 把它存进 PostgreSQL 的 appcenter 库，启动应用时再注入给进程），所以正确姿势是「装之前就别冲突」——fnOS 安装应用时本身会校验端口，真装上了还打不开，优先查这两样：</p>
+    <ul>
+      <li><b>应用是不是真的起来了</b>：SSH 执行 <code>sudo appcenter-cli status 应用名</code>，再 <code>curl -I http://127.0.0.1:端口</code> 本机探活，把「打不开」和「没启动」区分开。</li>
+      <li><b>端口是不是真被占了</b>：<code>sudo netstat -tlnp | grep 端口号</code>，看是谁在监听。多数情况其实是应用本身没起来（看 <code>/var/log/apps/应用名.log</code>），而不是端口问题。</li>
+    </ul>
+    <p>如果确实需要换端口，只能走 SSH，要同时改三处再重启应用：<code>/var/apps/应用名/manifest</code> 的 <code>service_port</code>、<code>/vol1/@appcenter/应用名/ui/config</code> 的 <code>port</code>，以及 appcenter 库 <code>app_service</code> 表的 <code>url</code>。这套操作对普通用户偏硬核，动手前建议先备份原文件。</p>
 
     <h2>写在最后</h2>
     <p>从 Docker 到原生，折腾这一圈的结论很简单：<b>好工具值得被更多人用上，而「装得上」比「功能全」更重要</b>。如果你也想在飞牛上省心整理影视库，去<a href="../apps/moviepilot-fnos-lite.html" style="color:var(--accent)">详情页</a>下载就行。有其他问题欢迎去 GitHub 提 issue。</p>
