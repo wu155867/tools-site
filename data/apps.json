@@ -5,7 +5,7 @@
       "name": "MP 入库助手",
       "desc": "MoviePilot 精简版，打包成飞牛 fnOS 原生应用。一次安装，自动硬链接整理，TMDB 没中文名也能用国内译名命名。",
       "platform": "fnOS",
-      "version": "1.0.6",
+      "version": "1.0.7",
       "updated": "2026-10-27",
       "size": "318 MB",
       "icon": "img/mp-icon.png?v=2",

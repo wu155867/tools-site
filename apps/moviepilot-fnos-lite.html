@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MP 入库助手 v1.0.6 - 工具铺</title>
+<title>MP 入库助手 v1.0.7 - 工具铺</title>
 <meta name="description" content="MoviePilot 精简版，打包成飞牛 fnOS 原生 FPK 应用：自动整理影视库、硬链接零碎片、中文译名重命名。">
 <link rel="icon" href="../img/logo.png">
 <link rel="stylesheet" href="../assets/style.css?v=7">
@@ -17,7 +17,7 @@
     <img src="../img/mp-icon.png?v=2" alt="MP 入库助手图标">
     <div style="flex:1;min-width:0">
       <h1>MP 入库助手</h1>
-      <div class="sub">MoviePilot 精简版 · 飞牛 fnOS 原生应用 · v1.0.6</div>
+      <div class="sub">MoviePilot 精简版 · 飞牛 fnOS 原生应用 · v1.0.7</div>
       <div class="dl-row">
         <a class="btn btn-primary" href="https://pan.xunlei.com/s/VP4sH9h2pZ9gbIBw4RLdO5A1A1?pwd=i3jw" target="_blank" rel="noopener">
           <svg class="dl-ico" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1v8.5m0 0L4.8 6.3M8 9.5l3.2-3.2M2.5 11.5v1.8c0 .7.5 1.2 1.2 1.2h8.6c.7 0 1.2-.5 1.2-1.2v-1.8" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -52,7 +52,7 @@
   <div class="panel">
     <h2>安装步骤</h2>
     <ol class="steps">
-      <li><b>下载安装包</b><p>点击上方下载按钮，得到 <code>moviepilot-fnos-lite-1.0.6.fpk</code>。</p></li>
+      <li><b>下载安装包</b><p>点击上方下载按钮，得到 <code>moviepilot-fnos-lite-1.0.7.fpk</code>。</p></li>
       <li><b>打开飞牛应用中心</b><p>fnOS 桌面 →「应用中心」→ 左下角选择「手动安装」，在弹出的安装选择页面中选择安装位置以及文件来源（实际文件存放位置），选中下载的 fpk 文件，然后按照提示安装即可。</p></li>
       <li><b>设置服务端口</b><p>安装向导会让你填服务端口，默认 3011 直接下一步；如果 3011 已被别的程序占用（比如旧版 Docker MoviePilot），改成 3012 之类空闲端口再继续。</p></li>
       <li><b>等待安装完成</b><p>首次安装约 1~2 分钟。完成后桌面出现「MP 入库助手」图标，点击进入即可开始配置。</p></li>
@@ -64,7 +64,14 @@
     <h2>更新日志</h2>
     <ul class="timeline">
       <li>
-        <div class="v"><span>v1.0.6</span><span class="date">2026-10-27</span><span class="new">当前</span></div>
+        <div class="v"><span>v1.0.7</span><span class="date">2026-10-27</span><span class="new">当前</span></div>
+        <ul>
+          <li>修复：彻底关闭「发现站点资源更新」弹窗——精简版已移除站点功能，这个检查只弹窗不打招呼</li>
+          <li>变更：登录页与浏览器标签页名称改为「MP 入库助手」，版本号与应用实际版本一致</li>
+        </ul>
+      </li>
+      <li>
+        <div class="v"><span>v1.0.6</span><span class="date">2026-10-27</span></div>
         <ul>
           <li>新增：安装时可自选服务端口（默认 3011），3011 被占用也能装上</li>
           <li>新增：应用设置里可随时改端口，桌面图标与访问入口自动跟着更新，无需 SSH</li>
