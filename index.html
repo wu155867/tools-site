@@ -5,18 +5,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>工具铺 - 自研小软件 · 免费分享</title>
 <meta name="description" content="独立开发的小工具：飞牛 fnOS 应用、NAS 效率工具，免费下载，附安装教程。">
-<link rel="icon" href="img/logo.png">
-<link rel="stylesheet" href="assets/style.css?v=7">
+<link rel="icon" type="image/png" href="img/logo-64.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="工具铺">
+<meta property="og:title" content="工具铺 - 自研小软件 · 免费分享">
+<meta property="og:description" content="独立开发的小工具：飞牛 fnOS 应用、NAS 效率工具，免费下载，附安装教程。">
+<meta property="og:url" content="https://myfnos.men/">
+<meta property="og:image" content="https://myfnos.men/img/shot-hero.jpg?v=1">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://myfnos.men/">
+<link rel="stylesheet" href="assets/style.css?v=8">
 </head>
 <body data-page="apps">
+<!--@header--><header class="site-header"><div class="container"><a class="logo" href="./index.html"><img src="./img/logo-64.png" alt="logo" width="28" height="28"><span>工具铺</span><span class="logo-sub">自研小软件 · 免费分享</span></a><nav class="nav" id="siteNav"><a href="./index.html" data-nav="apps" class="active">软件</a><a href="./blog.html" data-nav="blog">教程</a><a href="./about.html" data-nav="about">关于</a><a class="gh" href="https://github.com/wu155867" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg><span>GitHub</span></a></nav><button class="menu-btn" id="menuBtn" aria-label="打开菜单" aria-expanded="false"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 5.5h14M3 10h14M3 14.5h14"/></svg></button></div></header><!--/@header-->
 
 <main class="container">
   <section class="hero">
-    <h1>把折腾 NAS 的经验，<br>做成<em>人人能用</em>的小软件</h1>
-    <p class="lead">自己在用的工具，踩完坑、打磨好，免费分享。每一款都附安装教程，装不上随时反馈。</p>
-    <div class="actions">
-      <a class="btn btn-primary" href="#apps">看看软件</a>
-      <a class="btn btn-ghost" href="blog.html">看看教程</a>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <h1>把折腾 NAS 的经验，<br>做成<em>人人能用</em>的小软件</h1>
+        <p class="lead">自己在用的工具，踩完坑、打磨好，免费分享。每一款都附安装教程，装不上随时反馈。</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="apps/moviepilot-fnos-lite.html">下载 MP 入库助手</a>
+          <a class="btn btn-ghost" href="blog.html">看看教程</a>
+        </div>
+        <div class="hero-feats">
+          <div><b>原生安装</b><span>应用中心一键装，免 Docker</span></div>
+          <div><b>自动整理</b><span>硬链接入库，零重复占用</span></div>
+          <div><b>中文命名</b><span>豆瓣译名兜底，刮削友好</span></div>
+        </div>
+      </div>
+      <figure class="hero-shot">
+        <img src="img/shot-hero.jpg?v=1" alt="MP 入库助手主界面仪表盘" width="1440" height="900" fetchpriority="high">
+      </figure>
     </div>
   </section>
 
@@ -25,13 +47,8 @@
       <h2>软件</h2>
       <a class="more" href="about.html">关于作者 →</a>
     </div>
-    <div class="filter-bar" id="filterBar">
-      <button class="on" data-filter="all">全部</button>
-      <button data-filter="fnOS">飞牛 fnOS</button>
-      <button data-filter="Windows">Windows</button>
-      <button data-filter="Android">Android</button>
-    </div>
-    <div id="appList"></div>
+    <div id="appList"><!--@appList--><div class="app-card" data-platform="fnOS"><img class="app-icon" src="./img/mp-icon-128.png" alt="MP 入库助手" width="58" height="58"><div class="info"><h3><a href="./apps/moviepilot-fnos-lite.html">MP 入库助手</a><span class="ver">v1.0.9</span><span class="tag">fnOS</span></h3><div class="desc">MoviePilot 精简版，打包成飞牛 fnOS 原生应用。一次安装，自动硬链接整理，TMDB 没中文名也能用国内译名命名。</div><div class="meta"><span>更新于 2026-10-27</span></div></div><div class="side"><a class="btn btn-primary btn-sm" href="https://pan.xunlei.com/s/VP4x0GjNgpPn3R8iQlMVVesgA1?pwd=bkfi" target="_blank" rel="noopener">迅雷网盘</a><span class="size">318 MB</span></div></div><!--/@appList--></div>
+
   </section>
 
   <section class="section">
@@ -39,10 +56,12 @@
       <h2>最新教程</h2>
       <a class="more" href="blog.html">全部教程 →</a>
     </div>
-    <div id="postList" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:6px 22px;box-shadow:var(--shadow-sm)"></div>
+    <div id="postList" class="post-list"><!--@postList--><div class="post-item"><span class="date">2026-10-27</span><div class="item-body"><a class="title" href="./posts/fpk-install.html">从 Docker 到飞牛原生应用：我为什么做了 MP 入库助手</a><div class="desc">Docker 装 MoviePilot 的痛点、与原生应用的资源对比、裁剪打包踩过的坑，附完整安装教程与排查清单。</div></div><span class="tag">入门</span></div><div class="post-item"><span class="date">2026-10-26</span><div class="item-body"><a class="title" href="./posts/cn-title-rename.html">让影片自动用国内译名命名：TMDB 没中文名怎么办</a><div class="desc">TMDB 只有英文名时，播放器刮削一团糟。用豆瓣中文名兜底，硬链接时直接重命名。</div></div><span class="tag">实战</span></div><!--/@postList--></div>
+
   </section>
 </main>
+<!--@footer--><footer class="site-footer"><div class="container"><div class="f-left"><b>工具铺</b> &copy; 2026 &middot; <a href="https://github.com/wu155867" target="_blank" rel="noopener" style="color:inherit">GitHub</a></div><div class="f-links"><a href="./index.html">软件</a><a href="./blog.html">教程</a><a href="./about.html">关于</a></div></div></footer><!--/@footer-->
 
-<script src="assets/site.js?v=7"></script>
+<script src="assets/site.js?v=8"></script>
 </body>
 </html>

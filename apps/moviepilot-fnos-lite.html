@@ -5,16 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MP 入库助手 v1.0.9 - 工具铺</title>
 <meta name="description" content="MoviePilot 精简版，打包成飞牛 fnOS 原生 FPK 应用：自动整理影视库、硬链接零碎片、中文译名重命名。">
-<link rel="icon" href="../img/logo.png">
-<link rel="stylesheet" href="../assets/style.css?v=7">
+<link rel="icon" type="image/png" href="../img/logo-64.png">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="工具铺">
+<meta property="og:title" content="MP 入库助手 v1.0.9 - 飞牛 fnOS 原生应用">
+<meta property="og:description" content="MoviePilot 精简版，打包成飞牛 fnOS 原生 FPK 应用：自动整理影视库、硬链接零碎片、中文译名重命名。">
+<meta property="og:url" content="https://myfnos.men/apps/moviepilot-fnos-lite.html">
+<meta property="og:image" content="https://myfnos.men/img/shot-hero.jpg?v=1">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://myfnos.men/apps/moviepilot-fnos-lite.html">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"MP 入库助手","operatingSystem":"fnOS","applicationCategory":"MultimediaApplication","softwareVersion":"1.0.9","dateModified":"2026-10-27","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"author":{"@type":"Person","name":"wu155867"},"downloadUrl":"https://github.com/wu155867/moviepilot-fnos-lite/releases"}
+</script>
+<link rel="stylesheet" href="../assets/style.css?v=8">
 </head>
 <body data-page="apps">
+<!--@header--><header class="site-header"><div class="container"><a class="logo" href="../index.html"><img src="../img/logo-64.png" alt="logo" width="28" height="28"><span>工具铺</span><span class="logo-sub">自研小软件 · 免费分享</span></a><nav class="nav" id="siteNav"><a href="../index.html" data-nav="apps" class="active">软件</a><a href="../blog.html" data-nav="blog">教程</a><a href="../about.html" data-nav="about">关于</a><a class="gh" href="https://github.com/wu155867" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg><span>GitHub</span></a></nav><button class="menu-btn" id="menuBtn" aria-label="打开菜单" aria-expanded="false"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 5.5h14M3 10h14M3 14.5h14"/></svg></button></div></header><!--/@header-->
 
 <main class="container">
   <nav class="crumbs"><a href="../index.html">软件</a> / MP 入库助手</nav>
 
   <section class="app-hero">
-    <img src="../img/mp-icon.png?v=2" alt="MP 入库助手图标">
+    <img src="../img/mp-icon-128.png" alt="MP 入库助手图标" width="76" height="76">
     <div style="flex:1;min-width:0">
       <h1>MP 入库助手</h1>
       <div class="sub">MoviePilot 精简版 · 飞牛 fnOS 原生应用 · v1.0.9</div>
@@ -28,17 +41,26 @@
           GitHub 下载
         </a>
       </div>
-      <div class="dl-note" style="margin-top:10px">安装包约 318 MB · 提取码 <b>bkfi</b> · 网盘为文件夹分享，里面始终是最新版本 · 适用于飞牛 fnOS · 安装教程见下方</div>
+      <div class="dl-note" style="margin-top:10px">安装包约 318 MB · 提取码 <button class="copy-btn" data-copy="bkfi" data-label="bkfi">bkfi</button> 一键复制 · 网盘为文件夹分享，里面始终是最新版本 · 适用于飞牛 fnOS</div>
     </div>
   </section>
 
-  <div class="panel">
+  <nav class="page-nav" aria-label="页面导航">
+    <a href="#intro">这是什么</a>
+    <a href="#feat">核心特性</a>
+    <a href="#preview">界面预览</a>
+    <a href="#install">安装步骤</a>
+    <a href="#faq">常见问题</a>
+    <a href="#changelog">更新日志</a>
+  </nav>
+
+  <div class="panel" id="intro">
     <h2>这是什么</h2>
-    <p style="color:#2A2F36;font-size:14.5px">把开源的 MoviePilot 裁剪打包成飞牛 fnOS 应用中心可直接安装的 FPK。不用 SSH 敲命令、不用装 Docker、不用研究环境变量 —— 装上就能用，影视库自动整理进你的媒体目录。</p>
-    <p style="color:#2A2F36;font-size:14.5px;margin-top:8px">同时针对国内环境做了精简与增强：去掉国内用不上的模块、修复了飞牛下的路径与权限问题、并加入豆瓣中文名兜底等实用特性。</p>
+    <p style="color:var(--body-ink);font-size:14.5px">把开源的 MoviePilot 裁剪打包成飞牛 fnOS 应用中心可直接安装的 FPK。不用 SSH 敲命令、不用装 Docker、不用研究环境变量 —— 装上就能用，影视库自动整理进你的媒体目录。</p>
+    <p style="color:var(--body-ink);font-size:14.5px;margin-top:8px">同时针对国内环境做了精简与增强：去掉国内用不上的模块、修复了飞牛下的路径与权限问题、并加入豆瓣中文名兜底等实用特性。</p>
   </div>
 
-  <div class="panel">
+  <div class="panel" id="feat">
     <h2>核心特性</h2>
     <ul class="feat">
       <li><b>原生 FPK 安装</b> —— 应用中心一键安装/升级，数据保留在独立目录，卸载重装不丢配置</li>
@@ -49,7 +71,15 @@
     </ul>
   </div>
 
-  <div class="panel">
+  <div class="panel" id="preview">
+    <h2>界面预览</h2>
+    <div class="shot-frame">
+      <div class="bar"><i></i><i></i><i></i></div>
+      <img src="../img/shot-hero.jpg?v=1" alt="MP 入库助手仪表盘：存储空间、媒体统计、实时速率、近期整理与后台任务" width="1440" height="900" loading="lazy">
+    </div>
+  </div>
+
+  <div class="panel" id="install">
     <h2>安装步骤</h2>
     <ol class="steps">
       <li><b>下载安装包</b><p>点击上方下载按钮，得到 <code>moviepilot-fnos-lite-1.0.9.fpk</code>。</p></li>
@@ -60,7 +90,17 @@
     <div class="tip" style="margin-top:14px">更详细的图文步骤与常见报错排查，见教程 <a href="../posts/fpk-install.html" style="color:var(--accent)">《飞牛 fnOS 安装第三方 FPK 应用》</a>。</div>
   </div>
 
-  <div class="panel">
+  <div class="panel" id="faq">
+    <h2>常见问题</h2>
+    <ul class="feat">
+      <li><b>升级会丢配置吗？</b> 不会。配置保存在 fnOS 应用数据目录，覆盖安装自动继承。</li>
+      <li><b>和 Docker 版 MoviePilot 有什么区别？</b> 功能上是精简子集，胜在零配置门槛、与 fnOS 深度集成（权限、目录、开机自启）。</li>
+      <li><b>为什么文件名变成了「中文名 + 英文名」？</b> 这是 v1.0.4 新特性，兼顾国内播放器刮削与源站识别，可在设置中关闭。</li>
+      <li><b>3011 端口被占用怎么办？</b> v1.0.6 起安装向导里就能改端口；装好之后进「应用中心 → MP 入库助手 → 设置」也能改，保存后应用自动重启、桌面图标自动指向新端口。</li>
+    </ul>
+  </div>
+
+  <div class="panel" id="changelog">
     <h2>更新日志</h2>
     <ul class="timeline">
       <li>
@@ -116,18 +156,9 @@
       </li>
     </ul>
   </div>
-
-  <div class="panel">
-    <h2>常见问题</h2>
-    <ul class="feat">
-      <li><b>升级会丢配置吗？</b> 不会。配置保存在 fnOS 应用数据目录，覆盖安装自动继承。</li>
-      <li><b>和 Docker 版 MoviePilot 有什么区别？</b> 功能上是精简子集，胜在零配置门槛、与 fnOS 深度集成（权限、目录、开机自启）。</li>
-      <li><b>为什么文件名变成了「中文名 + 英文名」？</b> 这是 v1.0.4 新特性，兼顾国内播放器刮削与源站识别，可在设置中关闭。</li>
-      <li><b>3011 端口被占用怎么办？</b> v1.0.6 起安装向导里就能改端口；装好之后进「应用中心 → MP 入库助手 → 设置」也能改，保存后应用自动重启、桌面图标自动指向新端口。</li>
-    </ul>
-  </div>
 </main>
+<!--@footer--><footer class="site-footer"><div class="container"><div class="f-left"><b>工具铺</b> &copy; 2026 &middot; <a href="https://github.com/wu155867" target="_blank" rel="noopener" style="color:inherit">GitHub</a></div><div class="f-links"><a href="../index.html">软件</a><a href="../blog.html">教程</a><a href="../about.html">关于</a></div></div></footer><!--/@footer-->
 
-<script src="../assets/site.js?v=7"></script>
+<script src="../assets/site.js?v=8"></script>
 </body>
 </html>

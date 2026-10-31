@@ -19,47 +19,105 @@
   }
 
   var GH_SVG = '<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>';
+  var MENU_SVG = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 5.5h14M3 10h14M3 14.5h14"/></svg>';
 
-  function renderHeader(cfg) {
+  function headerHTML(cfg) {
     var navHtml = (cfg.nav || []).map(function (n) {
       return '<a href="' + ROOT + n.href + '" data-nav="' + esc(n.key) + '">' + esc(n.text) + '</a>';
     }).join("");
     var gh = cfg.github
       ? '<a class="gh" href="' + esc(cfg.github) + '" target="_blank" rel="noopener">' + GH_SVG + '<span>GitHub</span></a>'
       : "";
-    var el = document.createElement("header");
-    el.className = "site-header";
-    el.innerHTML =
+    return (
       '<div class="container">' +
         '<a class="logo" href="' + ROOT + 'index.html">' +
-          '<img src="' + ROOT + 'img/logo.png" alt="logo">' +
+          '<img src="' + ROOT + 'img/logo-64.png" alt="logo" width="28" height="28">' +
           '<span>' + esc(cfg.siteName || "") + '</span>' +
           '<span class="logo-sub">' + esc(cfg.tagline || "") + '</span>' +
         '</a>' +
-        '<nav class="nav">' + navHtml + gh + '</nav>' +
-      '</div>';
+        '<nav class="nav" id="siteNav">' + navHtml + gh + '</nav>' +
+        '<button class="menu-btn" id="menuBtn" aria-label="打开菜单" aria-expanded="false">' + MENU_SVG + '</button>' +
+      '</div>'
+    );
+  }
+
+  function renderHeader(cfg) {
+    if ($(".site-header")) return; // build 预渲染过
+    var el = document.createElement("header");
+    el.className = "site-header";
+    el.innerHTML = headerHTML(cfg);
     document.body.insertBefore(el, document.body.firstChild);
     var active = el.querySelector('[data-nav="' + PAGE + '"]');
     if (active) active.classList.add("active");
   }
 
-  function renderFooter(cfg) {
-    var el = document.createElement("footer");
-    el.className = "site-footer";
+  function footerHTML(cfg) {
     var year = new Date().getFullYear();
-    el.innerHTML =
+    var gh = cfg.github
+      ? ' &middot; <a href="' + esc(cfg.github) + '" target="_blank" rel="noopener" style="color:inherit">GitHub</a>'
+      : "";
+    return (
       '<div class="container">' +
-        '<div class="f-left"><b>' + esc(cfg.siteName || "") + '</b> &copy; ' + year +
-          (cfg.github ? ' &middot; <a href="' + esc(cfg.github) + '" target="_blank" rel="noopener" style="color:inherit">GitHub</a>' : "") +
-        '</div>' +
+        '<div class="f-left"><b>' + esc(cfg.siteName || "") + '</b> &copy; ' + year + gh + '</div>' +
         '<div class="f-links">' +
           '<a href="' + ROOT + 'index.html">软件</a>' +
           '<a href="' + ROOT + 'blog.html">教程</a>' +
           '<a href="' + ROOT + 'about.html">关于</a>' +
         '</div>' +
-      '</div>';
+      '</div>'
+    );
+  }
+
+  function renderFooter(cfg) {
+    if ($(".site-footer")) return;
+    var el = document.createElement("footer");
+    el.className = "site-footer";
+    el.innerHTML = footerHTML(cfg);
     document.body.appendChild(el);
   }
+
+  function bindHeader() {
+    var btn = $("#menuBtn"), nav = $("#siteNav");
+    if (!btn || !nav) return;
+    btn.addEventListener("click", function () {
+      var open = nav.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    nav.addEventListener("click", function (e) {
+      if (e.target.closest("a")) nav.classList.remove("open");
+    });
+  }
+
+  /* ---------- 交互：复制提取码等 ---------- */
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function (resolve, reject) {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.cssText = "position:fixed;opacity:0";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy") ? resolve() : reject(); }
+      catch (e) { reject(e); }
+      finally { document.body.removeChild(ta); }
+    });
+  }
+
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest(".copy-btn");
+    if (!btn) return;
+    copyText(btn.getAttribute("data-copy") || "").then(function () {
+      btn.classList.add("done");
+      btn.textContent = "已复制";
+      setTimeout(function () {
+        btn.classList.remove("done");
+        btn.innerHTML = btn.getAttribute("data-label") || btn.getAttribute("data-copy") || "";
+      }, 1600);
+    }).catch(function () {});
+  });
 
   /* ---------- 软件列表 ---------- */
 
@@ -77,7 +135,7 @@
       : '<span class="btn btn-primary btn-sm" style="opacity:.45;cursor:not-allowed" title="链接配置中">' + esc(dl ? dl.name : "下载") + ' · 待配置</span>';
     return (
       '<div class="app-card" data-platform="' + esc(a.platform) + '">' +
-        '<img class="app-icon" src="' + ROOT + esc(a.icon) + '" alt="' + esc(a.name) + '">' +
+        '<img class="app-icon" src="' + ROOT + esc(a.icon) + '" alt="' + esc(a.name) + '" width="58" height="58">' +
         '<div class="info">' +
           '<h3><a href="' + ROOT + esc(a.href) + '">' + esc(a.name) + '</a>' +
             '<span class="ver">v' + esc(a.version) + '</span>' +
@@ -93,19 +151,8 @@
 
   function renderAppList(apps) {
     var wrap = $("#appList");
-    if (!wrap) return;
+    if (!wrap || wrap.children.length) return; // 已有预渲染内容则跳过
     wrap.innerHTML = apps.map(appCard).join("");
-    var bar = $("#filterBar");
-    if (!bar) return;
-    bar.addEventListener("click", function (e) {
-      var btn = e.target.closest("button");
-      if (!btn) return;
-      bar.querySelectorAll("button").forEach(function (b) { b.classList.toggle("on", b === btn); });
-      var pf = btn.getAttribute("data-filter");
-      wrap.querySelectorAll(".app-card").forEach(function (card) {
-        card.style.display = (pf === "all" || card.getAttribute("data-platform") === pf) ? "" : "none";
-      });
-    });
   }
 
   /* ---------- 文章列表 ---------- */
@@ -114,7 +161,7 @@
     return (
       '<div class="post-item">' +
         '<span class="date">' + esc(p.date) + '</span>' +
-        '<div style="flex:1;min-width:0">' +
+        '<div class="item-body">' +
           '<a class="title" href="' + ROOT + 'posts/' + esc(p.slug) + '.html">' + esc(p.title) + '</a>' +
           '<div class="desc">' + esc(p.desc) + '</div>' +
         '</div>' +
@@ -125,11 +172,11 @@
 
   function renderPosts(posts, limit) {
     var wrap = $("#postList");
-    if (!wrap) return;
+    if (!wrap || wrap.children.length) return;
     var list = limit ? posts.slice(0, limit) : posts;
     wrap.innerHTML = list.length
       ? list.map(postItem).join("")
-      : '<div class="post-item"><div style="flex:1"><span class="title" style="color:var(--faint)">文章筹备中</span></div></div>';
+      : '<div class="post-item"><div class="item-body"><span class="title" style="color:var(--faint)">文章筹备中</span></div></div>';
   }
 
   /* ---------- 启动 ---------- */
@@ -138,6 +185,7 @@
     .then(function (cfg) {
       renderHeader(cfg);
       renderFooter(cfg);
+      bindHeader();
       return Promise.all([
         getJSON("data/apps.json").catch(function () { return { apps: [] }; }),
         getJSON("data/posts.json").catch(function () { return { posts: [] }; })
